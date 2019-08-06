@@ -19,7 +19,7 @@ namespace TableParser
             return parseLine;
         }
 
-        public static Token ReadField(string line, int i)
+        private static Token ReadField(string line, int i)
         {
             if(IsQuote(line[i]))
             {
@@ -31,7 +31,7 @@ namespace TableParser
             }
         }
 
-        public static Token GetOrdinalField(string line, int start)
+        private static Token GetOrdinalField(string line, int start)
         {
             var length = 1;
             while(!IsEndOFOrdinalField(line, start + length))
