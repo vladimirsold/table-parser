@@ -11,9 +11,10 @@ namespace TableParser
     [TestFixture]
     public class ParserTests
     {
-        void ParserTest(string stringToParse, string[] resultOfParse)
+        void ParserTest(string stringToParse, string[] expectedResult)
         {
-            Assert.AreEqual(stringToParse, resultOfParse);
+            var resultOfParse = FieldsParserTask.ParseLine(stringToParse);
+            Assert.AreEqual(expectedResult, resultOfParse.ToArray());
         }
 
         [Test]
@@ -25,7 +26,7 @@ namespace TableParser
         [Test]
         public void DelimiterMoreTheOneSpace()
         {
-            Assert.AreEqual("hello  world", new[] { "hello", "world" });
+            ParserTest("hello  world", new[] { "hello", "world" });
         }
 
         [Test]
@@ -118,5 +119,10 @@ namespace TableParser
             ParserTest("'a b ", new[] { "a b " });
         }
 
+        [Test]
+        public void OddEscapeSlashWithQuote()
+        {
+            ParserTest("'\\\' 0", new[] {"' 0"});
+        }
     }
 }
